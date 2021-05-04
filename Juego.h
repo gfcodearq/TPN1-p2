@@ -4,10 +4,8 @@
 #include "SFML\Graphics.hpp"
 #include "Animation.h"
 #include "Afichmation.h"
-
-//Declaracion de constantes
-const int POSICION_TERRENO_Y = 460;
-const int MAX_ASCENSO_SALTO_Y = 200;
+#include "Personaje.h"
+#include "ImageManager.h"
 
 using namespace sf;
 using namespace std;
@@ -27,6 +25,8 @@ private:
 	Event* evento;
 	Event* event;
 	Afichmation* anim;	
+	Personaje *personaje;
+	ImageManager *img_mgr;
 	Texture* tex_background;
 	Sprite* spr_background;
 	Texture* tex_bloque;

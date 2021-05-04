@@ -15,8 +15,6 @@
 using namespace std;
 using namespace sf;
 
-
-
 class Afichmation : public Sprite {
 private:
 	

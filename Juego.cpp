@@ -1,5 +1,6 @@
 #include "Juego.h"
 
+
 using namespace std;
 using namespace sf;
 
@@ -9,6 +10,8 @@ Juego::Juego(Vector2i resol, string tit)
 	wnd->setFramerateLimit(60);		
 	evento = new Event;	
 	event = new Event;
+	personaje = new Personaje(tex);
+	img_mgr = new ImageManager();
 	gameloop();
 }
 
@@ -16,8 +19,10 @@ void Juego::gameloop()
 {
 	cargar_recursos();	
 	while (wnd->isOpen())
-	{
-		
+	{	
+		personaje->ControlarSalto(event);
+		personaje->ControlarDesplazamiento();
+		personaje->Actualizar();
 		procesar_eventos();		
 		dibujar();
 	}
@@ -47,7 +52,12 @@ void Juego::cargar_recursos()
 	spr_bloque->setTexture(*tex_bloque);
 	spr_bloque->setPosition(300,180);
 	
-	personaje = new Personaje(tex);
+	img_mgr->addResourceDirectory("Recursos/imagenes/");	
+	Texture tex = img_mgr->getImage("spritesheet.png");
+	//background.setTexture(img_mgr.getImage("mundo_fondo.jpg"));
+	//background.setPosition(0, 0);
+	
+	
 	anim = new Afichmation ("spritesheet.png", true, 208, 249); 
 	//Afichmation anim("spritesheet.png", true, 26, 30);
 	anim->Add("idle", {0, 1, 2, 1, 0}, 8, true);
@@ -60,3 +70,5 @@ void Juego::cargar_recursos()
 	anim->setScale(Vector2f(.5f, .5f));
 	anim->setPosition(50,460);
 }
+
+

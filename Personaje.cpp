@@ -1,6 +1,6 @@
 #include "Personaje.h"
 
-Personaje::Personaje(Texture &tex)
+Personaje::Personaje(Texture *tex)
 {
 	sprite = new Afichmation(tex, true, 208, 249);
 	sprite->Add("idle", { 0, 1, 2, 1 }, 8, true);

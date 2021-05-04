@@ -1,10 +1,12 @@
+#pragma once
 #include "Afichmation.h"
 
 //DECLARACION DE CONSTANTES
 const int POSICION_TERRENO_Y = 500;
 const int MAX_ASCENSO_SALTO_Y = 200;
 
-class Personaje {
+class Personaje 
+{
 private:
 	Afichmation *sprite;
 	bool teclaSaltoPresionada = false;
@@ -12,7 +14,7 @@ private:
 	bool saltoEnProceso = true;
 	bool sentidoDerecha = false;
 public:
-	Personaje(Texture &tex);		
+	Personaje(Texture *tex){};	
 	void ControlarDesplazamiento();	
 	void ControlarSalto(Event *event);
 	void Dibujar(RenderWindow* w);	
