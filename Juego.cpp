@@ -10,20 +10,21 @@ Juego::Juego(Vector2i resol, string tit)
 	wnd->setFramerateLimit(60);		
 	evento = new Event;	
 	event = new Event;
-	personaje = new Personaje(tex);
+	
 	img_mgr = new ImageManager();
+	cargar_recursos();	
+	Texture tex = img_mgr->getImage("spritesheet.png");	
+	personaje = new Personaje(tex);
 	gameloop();
 }
 
 void Juego::gameloop()
 {
-	cargar_recursos();	
 	while (wnd->isOpen())
 	{	
 		personaje->ControlarSalto(event);
 		personaje->ControlarDesplazamiento();
-		personaje->Actualizar();
-		procesar_eventos();		
+		personaje->Actualizar();		
 		dibujar();
 	}
 }
@@ -32,43 +33,62 @@ void Juego::dibujar()
 {
 	wnd->clear(Color(255,255,255,255));	
 	wnd->draw(*spr_background);
-	wnd->draw(*spr_bloque);
-	wnd->draw(*anim);
+//	for (int i=1;i<=10;i++)
+//	{
+//		wnd->draw(*spr_bloque1);
+//	}
+//		
+	wnd->draw(*spr_bloque1);
+	wnd->draw(*spr_bloque2);
+	wnd->draw(*spr_bloque3);
+	wnd->draw(*spr_bloque4);
+	wnd->draw(*spr_bloque5);
+	wnd->draw(*spr_bloque6);
+	wnd->draw(*spr_bloque7);
+	wnd->draw(*spr_bloque8);
+	wnd->draw(*spr_bloque9);
+	wnd->draw(*spr_bloque10);
+	wnd->draw(*txt_tiempo);
+	
+	personaje->Dibujar(wnd);
 	wnd->display();
 }
 
 void Juego::cargar_recursos()	
 {
-	//Carga el fondo 
-	tex_background = new Texture;
-	tex_background->loadFromFile("mundo_fondo.jpg");
-	spr_background = new Sprite;
-	spr_background->setTexture(*tex_background);
-	
-	//Cargar bloque
-	tex_bloque = new Texture;
-	tex_bloque->loadFromFile("bloque_pared.png");
-	spr_bloque = new Sprite;
-	spr_bloque->setTexture(*tex_bloque);
-	spr_bloque->setPosition(300,180);
-	
 	img_mgr->addResourceDirectory("Recursos/imagenes/");	
-	Texture tex = img_mgr->getImage("spritesheet.png");
-	//background.setTexture(img_mgr.getImage("mundo_fondo.jpg"));
-	//background.setPosition(0, 0);
+	spr_background = new Sprite(img_mgr->getImage("mundo_fondo.jpg"));
+	//crear un bucle for que dibuje todos los bloques
+	spr_bloque1 = new Sprite(img_mgr->getImage("bloque_pared.png"));	
+	spr_bloque1->setPosition(200,180);	
+	spr_bloque2 = new Sprite(img_mgr->getImage("bloque_pared.png"));	
+	spr_bloque2->setPosition(245,180);	
+	spr_bloque3 = new Sprite(img_mgr->getImage("bloque_pared.png"));	
+	spr_bloque3->setPosition(290,180);	
+	spr_bloque4 = new Sprite(img_mgr->getImage("bloque_pared.png"));	
+	spr_bloque4->setPosition(335,180);	
+	spr_bloque5 = new Sprite(img_mgr->getImage("bloque_pared.png"));	
+	spr_bloque5->setPosition(380,180);	
+	spr_bloque6 = new Sprite(img_mgr->getImage("bloque_pared.png"));	
+	spr_bloque6->setPosition(425,180);	
+	spr_bloque7 = new Sprite(img_mgr->getImage("bloque_pared.png"));	
+	spr_bloque7->setPosition(470,180);	
+	spr_bloque8 = new Sprite(img_mgr->getImage("bloque_pared.png"));	
+	spr_bloque8->setPosition(515,180);	
+	spr_bloque9 = new Sprite(img_mgr->getImage("bloque_pared.png"));	
+	spr_bloque9->setPosition(560,180);	
+	spr_bloque10 = new Sprite(img_mgr->getImage("bloque_pared.png"));	
+	spr_bloque10->setPosition(155,180);	
+	
+	fuente1 = new Font();
+	fuente1->loadFromFile("Recursos/fuentes/smbfont.ttf");	
+	
+	txt_tiempo = new Text();
+	txt_tiempo->setFont(*fuente1);
+	txt_tiempo->setString("Tiempo: ");
+	txt_tiempo->setPosition(590,10);
 	
 	
-	anim = new Afichmation ("spritesheet.png", true, 208, 249); 
-	//Afichmation anim("spritesheet.png", true, 26, 30);
-	anim->Add("idle", {0, 1, 2, 1, 0}, 8, true);
-	anim->Add("run", {3, 4, 5, 4}, 8, true);
-	anim->Add("falls of", {6}, 8, true);
-	anim->Add("stairs", {7, 8}, 8, true);
-	anim->Add("jump", { 12,13, 14 }, 8, true);
-	anim->Add("collide", { 15 }, 8, false);	
-	anim->Play("idle");	
-	anim->setScale(Vector2f(.5f, .5f));
-	anim->setPosition(50,460);
 }
 
 

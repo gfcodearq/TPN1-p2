@@ -23,11 +23,11 @@ cursor=7:0
 open=true
 [source]
 path=Juego.cpp
-cursor=21:3
+cursor=87:35
 open=true
 [source]
 path=Personaje.cpp
-cursor=2:9
+cursor=2:30
 open=true
 [source]
 path=Afichmation.cpp
@@ -39,11 +39,11 @@ cursor=81:1
 open=true
 [header]
 path=Juego.h
-cursor=28:23
+cursor=54:1
 open=true
 [header]
 path=Personaje.h
-cursor=16:20
+cursor=16:25
 open=true
 [header]
 path=Afichmation.h

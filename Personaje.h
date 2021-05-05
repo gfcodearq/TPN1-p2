@@ -14,7 +14,7 @@ private:
 	bool saltoEnProceso = true;
 	bool sentidoDerecha = false;
 public:
-	Personaje(Texture *tex){};	
+	Personaje(Texture &tex);
 	void ControlarDesplazamiento();	
 	void ControlarSalto(Event *event);
 	void Dibujar(RenderWindow* w);	

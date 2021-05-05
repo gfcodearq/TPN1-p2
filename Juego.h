@@ -22,15 +22,42 @@ public:
 	void controlar_desplazamiento();
 private:
 	RenderWindow* wnd;
+	//Eventos
 	Event* evento;
-	Event* event;
-	Afichmation* anim;	
+	Event* event;		
 	Personaje *personaje;
 	ImageManager *img_mgr;
+	//Textura y sprite del background
 	Texture* tex_background;
 	Sprite* spr_background;
-	Texture* tex_bloque;
-	Sprite* spr_bloque;
+	
+	//Texturas y sprites bloques
+	Texture* tex_bloque1;
+	Sprite* spr_bloque1;
+	Texture* tex_bloque2;
+	Sprite* spr_bloque2;
+	Texture* tex_bloque3;
+	Sprite* spr_bloque3;
+	Texture* tex_bloque4;
+	Sprite* spr_bloque4;
+	Texture* tex_bloque5;
+	Sprite* spr_bloque5;
+	Texture* tex_bloque6;
+	Sprite* spr_bloque6;
+	Texture* tex_bloque7;
+	Sprite* spr_bloque7;
+	Texture* tex_bloque8;
+	Sprite* spr_bloque8;
+	Texture* tex_bloque9;
+	Sprite* spr_bloque9;
+	Texture* tex_bloque10;
+	Sprite* spr_bloque10;
+	
+	//Textos
+	Font * fuente1;
+	Text * txt_tiempo;
+		
+	//Boleanos que verifican la accion del salto
 	bool teclaSaltoPresionada = false; //boleano que verifica si la tecla de salto esta activada
 	bool enAscenso = false; //booleano para verificar que el personaje sube
 	bool saltoEnProceso = false; //booleano para verificar que el salto esta en proceso
