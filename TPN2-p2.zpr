@@ -23,7 +23,7 @@ cursor=7:0
 open=true
 [source]
 path=Juego.cpp
-cursor=87:35
+cursor=35:17
 open=true
 [source]
 path=Personaje.cpp
@@ -39,7 +39,7 @@ cursor=81:1
 open=true
 [header]
 path=Juego.h
-cursor=54:1
+cursor=34:21
 open=true
 [header]
 path=Personaje.h
