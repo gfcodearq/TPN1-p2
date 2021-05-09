@@ -20,6 +20,9 @@ public:
 	void dibujar();	
 	void controlar_salto(Event *event);
 	void controlar_desplazamiento();
+	void get_numeros_aleatorios();
+	void mostrar_pantalla_numeros();
+	void procesar_colisiones();
 private:
 	RenderWindow* wnd;
 	//Eventos
@@ -31,13 +34,17 @@ private:
 	Texture* tex_background;
 	Sprite* spr_background;
 	//Textura y sprite del bloque
-	Texture* tex_bloque[9];
-	Sprite* spr_bloque[9];
-	
+	Texture* tex_bloque[10];
+	Sprite* spr_bloque[10];
+	int numeros[10];
+	//Creacion del reloj y tiempo
+	Clock *reloj;
+	Time *tiempo;
+	float tiempo1 = 60;
 	//Textos
 	Font * fuente1;
 	Text * txt_tiempo;
-	Text* txt_bloque[9];	
+	Text* txt_bloque[10];	
 	//Boleanos que verifican la accion del salto
 	bool teclaSaltoPresionada = false; //boleano que verifica si la tecla de salto esta activada
 	bool enAscenso = false; //booleano para verificar que el personaje sube

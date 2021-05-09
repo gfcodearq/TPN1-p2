@@ -87,3 +87,8 @@ void Personaje::Actualizar()
 	sprite->Update();
 	
 }
+
+Sprite Personaje::get_sprite()
+{
+	return *sprite;
+}
