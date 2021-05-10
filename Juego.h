@@ -46,10 +46,5 @@ private:
 	Font * fuente1;
 	Text * txt_tiempo;
 	Text* txt_bloque[10];	
-	//Boleanos que verifican la accion del salto
-	bool teclaSaltoPresionada = false; //boleano que verifica si la tecla de salto esta activada
-	bool enAscenso = false; //booleano para verificar que el personaje sube
-	bool saltoEnProceso = false; //booleano para verificar que el salto esta en proceso
-	bool sentidoDerecha = false; //boleano para verificar si va en sentido derecha
 };
 #endif

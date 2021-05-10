@@ -36,12 +36,14 @@ else if (saltoEnProceso) {
 else {
 	sprite->Play("idle");
 }
+
 }
 
 void Personaje::ControlarSalto(Event *event)
 {
 	if (event->type == sf::Event::KeyPressed && event->key.code == sf::Keyboard::Space) {
 		teclaSaltoPresionada = true;
+		saltoEnProceso = true;
 	}
 	else if (event->type == sf::Event::KeyReleased && event->key.code == sf::Keyboard::Space) {
 		teclaSaltoPresionada = false;
@@ -71,10 +73,10 @@ void Personaje::Actualizar()
 		
 		//Se ejecuta el movimiento hacia arriba o abajo en eje 'y'
 		if (enAscenso) {
-			sprite->setPosition(sprite->getPosition().x, sprite->getPosition().y - 1);
+			sprite->setPosition(sprite->getPosition().x, sprite->getPosition().y - 5);
 		}
 		else {
-			sprite->setPosition(sprite->getPosition().x, sprite->getPosition().y + 1);
+			sprite->setPosition(sprite->getPosition().x, sprite->getPosition().y + 6);
 		}
 		
 		//Se controla cuando el personaje vuelve a tocar el eje 'y' del terreno

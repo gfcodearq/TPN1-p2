@@ -25,16 +25,15 @@ Juego::Juego(Vector2i resol, string tit)
 
 void Juego::gameloop()
 {
-	cargar_recursos();	
-	personaje->ControlarSalto(event);
+	cargar_recursos();		
 	while (wnd->isOpen())
 	{					
 		*tiempo = reloj->getElapsedTime(); //obtengo el tiempo que ha pasado
 		cout<<tiempo->asSeconds();
-		txt_tiempo->setString("Tiempo: "+to_string(tiempo->asSeconds()));
-		personaje->ControlarDesplazamiento();		
-		personaje->Actualizar();					
-		procesar_eventos();				
+		txt_tiempo->setString("Tiempo: "+to_string(tiempo->asSeconds()));	
+		personaje->Actualizar();
+		procesar_eventos();			
+		personaje->ControlarDesplazamiento();	
 		procesar_colisiones();
 		dibujar();
 	}	
@@ -140,7 +139,8 @@ void Juego::procesar_eventos()
 	while(wnd->pollEvent(*evento))
 	{
 		if(evento->type == Event::Closed)
-		wnd->close();
-	}	
+		wnd->close();		
+	}		
+	personaje->ControlarSalto(evento);	
 }
 

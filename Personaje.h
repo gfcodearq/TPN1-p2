@@ -16,7 +16,7 @@ private:
 public:
 	Personaje(Texture &tex);
 	void ControlarDesplazamiento();	
-	void ControlarSalto(Event *event);
+	void ControlarSalto(Event *evento);
 	void Dibujar(RenderWindow* w);	
 	void Actualizar();		
 	Sprite get_sprite();	
