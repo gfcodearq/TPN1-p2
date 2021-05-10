@@ -2,7 +2,7 @@
 #include "Afichmation.h"
 
 //DECLARACION DE CONSTANTES
-const int POSICION_TERRENO_Y = 468;
+const int POSICION_TERRENO_Y = 500;
 const int MAX_ASCENSO_SALTO_Y = 200;
 
 class Personaje 

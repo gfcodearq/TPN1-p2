@@ -21,6 +21,7 @@ public:
 	void controlar_salto(Event *event);
 	void controlar_desplazamiento();
 	void get_numeros_aleatorios();
+	void ordenar_numeros();
 	void mostrar_pantalla_numeros();
 	void procesar_colisiones();
 private:
@@ -40,7 +41,7 @@ private:
 	//Creacion del reloj y tiempo
 	Clock *reloj;
 	Time *tiempo;
-	float tiempo1 = 60;
+	int tiempo1 = 60;
 	//Textos
 	Font * fuente1;
 	Text * txt_tiempo;
