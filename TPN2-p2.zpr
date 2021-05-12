@@ -15,7 +15,7 @@ tab_width=4
 tab_use_spaces=0
 explorer_path=.
 inherits_from=
-current_source=Juego.cpp
+current_source=Personaje.h
 path_char=\
 [source]
 path=main.cpp
@@ -23,7 +23,7 @@ cursor=7:0
 open=true
 [source]
 path=Juego.cpp
-cursor=141:17
+cursor=29:2
 open=true
 [source]
 path=Personaje.cpp
@@ -39,7 +39,7 @@ cursor=81:1
 open=true
 [header]
 path=Juego.h
-cursor=47:23
+cursor=42:15
 open=true
 [header]
 path=Personaje.h

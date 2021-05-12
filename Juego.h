@@ -40,7 +40,7 @@ private:
 	int numeros[10];
 	//Creacion del reloj y tiempo
 	Clock *reloj;
-	Time *tiempo;
+	Time *tiempo;		
 	int tiempo1 = 60;
 	//Textos
 	Font * fuente1;

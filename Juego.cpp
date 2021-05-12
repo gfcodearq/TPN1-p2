@@ -14,7 +14,7 @@ Juego::Juego(Vector2i resol, string tit)
 	evento = new Event;	
 	event = new Event;
 	reloj = new Clock;
-	tiempo = new Time;	
+	tiempo = new Time;		
 	reloj->restart();//le doy inicio al reloj
 	img_mgr = new ImageManager(); 	
 	Texture tex = img_mgr->getImage("spritesheet.png");	
@@ -25,16 +25,15 @@ Juego::Juego(Vector2i resol, string tit)
 
 void Juego::gameloop()
 {
-	cargar_recursos();		
+	cargar_recursos();	
 	while (wnd->isOpen())
-	{					
-		*tiempo = reloj->getElapsedTime(); //obtengo el tiempo que ha pasado
-		cout<<tiempo->asSeconds();
-		txt_tiempo->setString("Tiempo: "+to_string(tiempo->asSeconds()));	
+	{		
+		*tiempo = reloj->getElapsedTime(); //obtengo el tiempo que ha pasado		
+		txt_tiempo->setString("Tiempo: "+to_string(tiempo1-tiempo->asSeconds()));	
 		personaje->Actualizar();
 		procesar_eventos();			
 		personaje->ControlarDesplazamiento();	
-		procesar_colisiones();
+		procesar_colisiones();		
 		dibujar();
 	}	
 }
