@@ -19,7 +19,7 @@ Juego::Juego(Vector2i resol, string tit)
 	img_mgr = new ImageManager(); 	
 	Texture tex = img_mgr->getImage("spritesheet.png");	
 	personaje = new Personaje(tex);
-	get_numeros_aleatorios();	
+	get_numeros_aleatorios();
 	gameloop();
 }
 
@@ -28,11 +28,12 @@ void Juego::gameloop()
 	cargar_recursos();	
 	while (wnd->isOpen())
 	{		
-		*tiempo = reloj->getElapsedTime(); //obtengo el tiempo que ha pasado		
-		txt_tiempo->setString("Tiempo: "+to_string(tiempo1-tiempo->asSeconds()));	
+		*tiempo = reloj->getElapsedTime(); //obtengo el tiempo que ha pasado
+		int tiempoEntero = reloj->getElapsedTime().asSeconds(); //paso a entero el numero del reloj
+		txt_tiempo->setString("Tiempo: "+to_string(tiempo1-tiempoEntero));	
 		personaje->Actualizar();
 		procesar_eventos();			
-		personaje->ControlarDesplazamiento();	
+		personaje->ControlarDesplazamiento();		
 		procesar_colisiones();		
 		dibujar();
 	}	
@@ -61,8 +62,8 @@ void Juego::cargar_recursos()
 	for(int i=0;i<10;i++)
 	{
 		spr_bloque[i] = new Sprite(img_mgr->getImage("bloque_pared.png"));	
-	}
-	
+		spr_bloque[i]->setScale(1.5,1.5);
+	}	
 	//Cargo la fuente 
 	fuente1 = new Font();	
 	fuente1->loadFromFile("Recursos/fuentes/smbfont.ttf");		
@@ -76,25 +77,25 @@ void Juego::cargar_recursos()
 	{
 		txt_bloque[i] = new Text();
 		txt_bloque[i]->setFont(*fuente1);
-		txt_bloque[i]->setString(to_string(numeros[i])); //imprime el espacio de memoria 	
+		txt_bloque[i]->setString(to_string(numeros[i])); 
 	}
 	
 	//seteo la posicion de los bloques
-	int x = 155;
+	int x = 70;
 	for (int i = 0; i < 10; i++) {
-		spr_bloque[i]->setPosition(x, 180);
-		x += 45;
+		spr_bloque[i]->setPosition(x, 200);
+		x += 69;
 	}	
 	
 	//Setear posicion texto con respecto al bloque
-	x = 177;
+	x = 95;
 	for (int i = 0; i < 10; i++) {
-		txt_bloque[i]->setPosition(x, 180);
-		x += 44;
+		txt_bloque[i]->setPosition(x, 210);
+		x += 68;
 	}	
 	
 }
-
+//Genara numeros al azar entre 99 y 1
 void Juego::get_numeros_aleatorios()
 {
 	for(int i=0;i<10;i++)
@@ -103,6 +104,7 @@ void Juego::get_numeros_aleatorios()
 	}
 }
 
+//Ordena el arreglo de numeros mediante el metodo burbuja
 void Juego::ordenar_numeros()
 {
 	int aux;
@@ -119,7 +121,23 @@ void Juego::ordenar_numeros()
 	}
 }
 
+void Juego::ordenar_bloques()
+{
+	int aux;
+	for(int i=0;i<10;i++){
+		for(int j=0;j<10;j++)
+		{
+			if(numeros[j]<numeros[j+1])
+			{
+				spr_bloque[i] = numeros[j];
+				numeros[j] = numeros[j+1];
+				numeros[j+1] = spr_bloque[i];
+			}
+		}
+	}
+}
 
+//Procesa las coliciones entre el personaje y el bloque
 void Juego::procesar_colisiones()
 {
 	for (int i = 0; i < 10; i++) {
@@ -132,7 +150,7 @@ void Juego::procesar_colisiones()
 	}
 }
 
-
+//Procesa eventos 
 void Juego::procesar_eventos()
 {
 	while(wnd->pollEvent(*evento))

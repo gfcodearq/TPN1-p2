@@ -8,8 +8,8 @@ Personaje::Personaje(Texture &tex)
 	sprite->Add("jump", { 12, 13, 14 }, 8, false);
 	sprite->Add("collide", { 15 }, 8, false);
 	sprite->Play("idle");
-	sprite->setScale(.5f, .5f);
-	sprite->setPosition(100, POSICION_TERRENO_Y - 500);
+	sprite->setScale(.3f, .3f);
+	sprite->setPosition(100, POSICION_TERRENO_Y);
 }
 
 void Personaje::ControlarDesplazamiento()
@@ -41,13 +41,12 @@ else {
 
 void Personaje::ControlarSalto(Event *event)
 {
-	if (event->type == sf::Event::KeyPressed && event->key.code == sf::Keyboard::Space) {
+	//if (event->type == sf::Event::KeyPressed && event->key.code == sf::Keyboard::Space) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 		teclaSaltoPresionada = true;
 		saltoEnProceso = true;
-	}
-	else if (event->type == sf::Event::KeyReleased && event->key.code == sf::Keyboard::Space) {
-		teclaSaltoPresionada = false;
-	}
+		cout<<"entro?"<<endl;
+	}	
 }
 
 void Personaje::Dibujar(RenderWindow* w)
@@ -61,6 +60,7 @@ void Personaje::Actualizar()
 	if (teclaSaltoPresionada && !saltoEnProceso) {
 		saltoEnProceso = true;
 		enAscenso = true;
+		teclaSaltoPresionada = false;
 	}
 	
 	//Bloque que maneja el salto y su descenso a través del eje 'y'.
@@ -74,6 +74,7 @@ void Personaje::Actualizar()
 		//Se ejecuta el movimiento hacia arriba o abajo en eje 'y'
 		if (enAscenso) {
 			sprite->setPosition(sprite->getPosition().x, sprite->getPosition().y - 5);
+			cout<<"esta saltando"<<endl;
 		}
 		else {
 			sprite->setPosition(sprite->getPosition().x, sprite->getPosition().y + 6);
