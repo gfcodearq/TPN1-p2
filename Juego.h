@@ -2,6 +2,7 @@
 #define JUEGO_H
 
 #include "SFML\Graphics.hpp"
+#include "SFML\Audio.hpp"
 #include "Animation.h"
 #include "Afichmation.h"
 #include "Personaje.h"
@@ -22,6 +23,7 @@ public:
 	void controlar_desplazamiento();
 	void get_numeros_aleatorios();
 	void ordenar_numeros();
+	void ordenar_bloques();
 	void mostrar_pantalla_numeros();
 	void procesar_colisiones();
 private:
@@ -46,5 +48,8 @@ private:
 	Font * fuente1;
 	Text * txt_tiempo;
 	Text* txt_bloque[10];	
+	//Sonido 
+	SoundBuffer* buffer; //Contiene el archivo de sonido
+	Sound* sonido; //Sonido va a cargar el buffer
 };
 #endif

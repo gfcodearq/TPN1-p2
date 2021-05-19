@@ -44,7 +44,7 @@ void Personaje::ControlarSalto(Event *event)
 	//if (event->type == sf::Event::KeyPressed && event->key.code == sf::Keyboard::Space) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 		teclaSaltoPresionada = true;
-		saltoEnProceso = true;
+		saltoEnProceso = true;		
 		cout<<"entro?"<<endl;
 	}	
 }
