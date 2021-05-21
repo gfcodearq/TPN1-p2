@@ -25,7 +25,7 @@ public:
 	void ordenar_numeros();
 	void ordenar_bloques();
 	void mostrar_pantalla_numeros();
-	void procesar_colisiones();
+	void procesar_colisiones();	
 private:
 	RenderWindow* wnd;
 	//Eventos
@@ -39,6 +39,7 @@ private:
 	//Textura y sprite del bloque
 	Texture* tex_bloque[10];
 	Sprite* spr_bloque[10];
+	//Numeros
 	int numeros[10];
 	//Creacion del reloj y tiempo
 	Clock *reloj;
@@ -51,5 +52,7 @@ private:
 	//Sonido 
 	SoundBuffer* buffer; //Contiene el archivo de sonido
 	Sound* sonido; //Sonido va a cargar el buffer
+	SoundBuffer* buffer_game;
+	Sound *sonido_game;
 };
 #endif

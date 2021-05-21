@@ -9,39 +9,46 @@ using namespace sf;
 
 Juego::Juego(Vector2i resol, string tit)
 {
+	//Windows
 	wnd = new RenderWindow(VideoMode(800, 600), tit);
-	wnd->setFramerateLimit(60);		
+	wnd->setFramerateLimit(60);
+	//Eventos
 	evento = new Event;	
 	event = new Event;
 	reloj = new Clock;
 	tiempo = new Time;		
 	reloj->restart();//le doy inicio al reloj
+	//Sonidos
 	buffer = new SoundBuffer;
+	buffer_game = new SoundBuffer;
 	sonido = new Sound;
+	sonido_game = new Sound;
+	//Texturas
 	img_mgr = new ImageManager(); 	
-	Texture tex = img_mgr->getImage("spritesheet.png");	
+	Texture tex = img_mgr->getImage("spritesheet.png");
+	//Personaje
 	personaje = new Personaje(tex);
 	get_numeros_aleatorios();
-	gameloop();
+	gameloop();	
 }
 
 void Juego::gameloop()
 {
 	cargar_recursos();	
-	
+	sonido_game->setVolume(3);
+	sonido_game->play();
+	sonido_game->setLoop(true);	
 	while (wnd->isOpen())
 	{		
-		
 		*tiempo = reloj->getElapsedTime(); //obtengo el tiempo que ha pasado
 		int tiempoEntero = reloj->getElapsedTime().asSeconds(); //paso a entero el numero del reloj
 		txt_tiempo->setString("Tiempo: "+to_string(tiempo1-tiempoEntero));	
 		personaje->Actualizar();
-		procesar_eventos();			
+		procesar_eventos();		
 		personaje->ControlarDesplazamiento();		
 		procesar_colisiones();		
 		dibujar();
-	}	
-	ordenar_numeros();
+	}
 }
 
 void Juego::dibujar()
@@ -99,12 +106,18 @@ void Juego::cargar_recursos()
 		x += 68;
 	}	
 	//Cargar sonidos
-	if(!buffer->loadFromFile("mario-bros-jump.mp3"))
+	if(!buffer->loadFromFile("Recursos/sonidos/mario-bros-jump.wav"))
 	{
 		cout<<"No se pudo cargar efectos"<<endl;
 	}
 	sonido->setBuffer(*buffer);
+	if(!buffer_game->loadFromFile("Recursos/sonidos/super-mario-bros.wav"))
+	{
+		cout<<"No se pudo cargar efectos"<<endl;
+	}
+	sonido_game->setBuffer(*buffer_game);
 }
+
 //Genara numeros al azar entre 99 y 1
 void Juego::get_numeros_aleatorios()
 {
@@ -131,21 +144,6 @@ void Juego::ordenar_numeros()
 	}
 }
 
-//void Juego::ordenar_bloques()
-//{
-//	int aux;
-//	for(int i=0;i<10;i++){
-//		for(int j=0;j<10;j++)
-//		{
-//			if(numeros[j]<numeros[j+1])
-//			{
-//				spr_bloque[i] = numeros[j];
-//				numeros[j] = numeros[j+1];
-//				numeros[j+1] = spr_bloque[i];
-//			}
-//		}
-//	}
-//}
 
 //Procesa las coliciones entre el personaje y el bloque
 void Juego::procesar_colisiones()
@@ -153,7 +151,7 @@ void Juego::procesar_colisiones()
 	for (int i = 0; i < 10; i++) {
 		FloatRect box = spr_bloque[i]->getGlobalBounds();
 		FloatRect per = personaje->get_sprite().getGlobalBounds();
-		if (per.intersects(box) && numeros[0])
+		if (per.intersects(box))
 		{			
 			txt_bloque[i]->setColor(Color::Green);
 		}			
@@ -166,7 +164,7 @@ void Juego::procesar_eventos()
 	while(wnd->pollEvent(*evento))
 	{
 		if(evento->type == Event::Closed)
-		wnd->close();	
+		wnd->close();		
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
 			sonido->setVolume(3);
