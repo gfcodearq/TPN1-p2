@@ -16,7 +16,7 @@ void Personaje::ControlarDesplazamiento()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 		sprite->FlipX(false);
-		sprite->setPosition(sprite->getPosition().x - 1, sprite->getPosition().y);
+		sprite->setPosition(sprite->getPosition().x - 4, sprite->getPosition().y);
 		if (!saltoEnProceso)
 			sprite->Play("walking");
 		else
@@ -24,7 +24,7 @@ void Personaje::ControlarDesplazamiento()
 	}
 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 	sprite->FlipX(true);
-	sprite->setPosition(sprite->getPosition().x + 1, sprite->getPosition().y);
+	sprite->setPosition(sprite->getPosition().x + 4, sprite->getPosition().y);
 	if (!saltoEnProceso)
 		sprite->Play("walking");
 	else

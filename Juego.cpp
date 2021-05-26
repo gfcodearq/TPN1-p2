@@ -29,7 +29,7 @@ Juego::Juego(Vector2i resol, string tit)
 	Texture tex = img_mgr->getImage("Recursos\\imagenes\\spritesheet.png");
 	//Personaje
 	personaje = new Personaje(tex);
-	game_over();
+	game_over = false;	
 	gameloop();	
 	
 }
@@ -40,36 +40,46 @@ void Juego::gameloop()
 	sonido_game->setVolume(3);
 	sonido_game->play();
 	sonido_game->setLoop(true);	
-	while (wnd->isOpen() && !game_over())
-	{		
-		*tiempo = reloj->getElapsedTime(); //obtengo el tiempo que ha pasado
-		tiempoEntero = reloj->getElapsedTime().asSeconds(); //paso a entero el numero del reloj		
-		txt_tiempo->setString("Tiempo: "+to_string(tiempo1-tiempoEntero));//paso a string un valor entero			
-		personaje->Actualizar();
-		procesar_eventos();		
-		personaje->ControlarDesplazamiento();		
-		procesar_colisiones();		
-		dibujar();			
-	}	
-	while(game_over())
+	while (wnd->isOpen())
 	{
-		wnd->draw(*txt_game_over);
-		sonido_game->stop();		
-		//sonido_game_over->play();
-		system("PAUSE");			
+		if (!game_over) {
+			*tiempo = reloj->getElapsedTime(); //obtengo el tiempo que ha pasado
+			tiempoEntero = reloj->getElapsedTime().asSeconds(); //paso a entero el numero del reloj
+			if (tiempo1 - tiempoEntero < 0) {
+				game_over = true;
+				sonido_game->stop();
+			}			
+			txt_tiempo->setString("Tiempo: "+to_string(tiempo1-tiempoEntero));//paso a string un valor entero		
+			personaje->Actualizar();
+			procesar_eventos();		
+			personaje->ControlarDesplazamiento();		
+			procesar_colisiones();		
+		}
+		dibujar();
 	}
 }
 
 void Juego::dibujar()
 {
-	wnd->clear(Color(255,255,255,255));	//Limpia la pantalla 
+	
 	wnd->draw(*spr_background); //Dibuja el sprite del background
 	for (int i=0;i<10;i++)
 	{
-	bloques[i]->DrawBloque(wnd);//Dibuja los bloques en pantalaa
+		bloques[i]->DrawBloque(wnd);//Dibuja los bloques en pantalaa
 	}
 	personaje->Dibujar(wnd);//Dibuja el personaje	
 	wnd->draw(*txt_tiempo);	//Dibuja el texto del tiempo
+	if(indiceAvanceBusqueda == 10) //si el indice de busqueda alcanza los 10 termina el juego
+	{
+		game_over = true;
+	}
+	if (game_over) { //Si es game over dibujo		
+		wnd->draw(*txt_game_over);				
+		for (int i = 0; i < 10; i++)
+		{
+			bloques[i]->SetValor(numeros[i]); //cambio el valor del texto por el nuevo ordenado 
+		}
+	}
 	wnd->display(); //Muestra en pantalla todo lo dibujado
 }
 
@@ -89,14 +99,16 @@ void Juego::cargar_recursos()
 	txt_tiempo->setPosition(590,10);	
 	txt_game_over = new Text();
 	txt_game_over->setFont(*fuente1);
-	txt_game_over->setPosition(400,300);
+	txt_game_over->setPosition(330,300);
+	txt_game_over->setString("GAME OVER");
+	txt_game_over->setCharacterSize(50);
 	
 	//seteo la posicion de los bloques
 	int x = 70;	
-	for (int i = 0; i < 10; i++) {
-		numeros[i] =  rand() % 99 + 1;
-		bloques[i] = new Bloque(x, 200, numeros[i]);
-		x += 69;
+	for (int i = 0; i < 10; i++) { 
+		numeros[i] =  rand() % 99 + 1; //Genero numero aleatorio
+		bloques[i] = new Bloque(x, 200, numeros[i]); //Creo el bloque
+		x += 69; //Corro la posicion para la creacion del siguiente bloque
 	}
 	
 	ordenar_numeros();
@@ -117,12 +129,6 @@ void Juego::cargar_recursos()
 		cout<<"No se pudo cargar efectos"<<endl;
 	}
 	sonido_colision->setBuffer(*buffer_colision);
-	
-//	if(!buffer_game_over->loadFromFile("Recursos\\sonidos\\mario-bros game over.wav"))
-//	{
-//		cout<<"No se pudo cargar efectos"<<endl;
-//	}
-//	sonido_game_over->setBuffer(*buffer_game_over);
 }
 
 
@@ -132,8 +138,7 @@ void Juego::ordenar_numeros()
 	int aux;
 	for (int i = 0; i < 10; i++) {
 		cout<<numeros[i]<<endl;
-	}
-	
+	}	
 	
 	for(int i=0; i<10; i++){
 		for(int j=0; j < 9; j++)
@@ -145,8 +150,12 @@ void Juego::ordenar_numeros()
 				numeros[j+1] = aux;
 			}
 		}
-	}		
+	}	
+	for (int i = 0; i < 10; i++) {
+		cout<<numeros[i]<<endl;		
+	}
 }
+
 
 
 //Procesa las coliciones entre el personaje y el bloque
@@ -154,20 +163,23 @@ void Juego::procesar_colisiones()
 {
 	Bloque *aux;
 	for (int i = 0; i < 10; i++) {
-		aux = bloques[i];
-		if (personaje->get_sprite().getGlobalBounds().intersects(aux->ObtenerColisionador()))
+		aux = bloques[i];	
+		FloatRect boxColliderMario = personaje->get_sprite().getGlobalBounds();
+		boxColliderMario.width *=0.5;
+		boxColliderMario.left += boxColliderMario.width * .25f;
+		if (boxColliderMario.intersects(aux->ObtenerColisionador())) //Si el personaje intersecta con el bloque
 		{
 			cout<<aux->ObtenerValorBloque()<<"/"<<numeros[indiceAvanceBusqueda]<<endl;
-			if (aux->ObtenerValorBloque() == numeros[indiceAvanceBusqueda]) { 
+			if (aux->ObtenerValorBloque() == numeros[indiceAvanceBusqueda]) { //Si el valor del bloque es igual al numero ordenado se pone en verde 
 				aux->SetColor(Color::Green);
-				sonido_colision->play();
+				sonido_colision->play();				
 				indiceAvanceBusqueda++;
 			} else {				
-				aux->SetColor(Color::Red);
-				sonido_colision->play();
-				tiempo1-=10;
+				aux->SetColor(Color::Red); //Si el valor del bloque no corresponde al numero ordenado se pone en rojo
+				sonido_colision->play();				
+				tiempo1 -= 10;				
 			}
-		}			
+		}		
 	}
 }
 
@@ -176,9 +188,9 @@ void Juego::procesar_eventos()
 {
 	while(wnd->pollEvent(*evento))
 	{
-		if(evento->type == Event::Closed)
+		if(evento->type == Event::Closed) //Evento para cerrar la ventana
 		wnd->close();		
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) //Evento creado para disparar el sonido del personaje cuando salta
 		{
 			sonido->setVolume(3);
 			sonido->play();
@@ -187,14 +199,3 @@ void Juego::procesar_eventos()
 	personaje->ControlarSalto(evento);	
 }
 
-bool Juego::game_over()
-{
-	if (tiempo1 <= 0)
-	{
-		return true;		
-	}
-	else 
-		{
-		return false;
-	}
-}

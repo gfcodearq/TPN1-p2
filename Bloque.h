@@ -32,14 +32,20 @@ public:
 	
 	FloatRect ObtenerColisionador() {
 		return s->getGlobalBounds();
-	}
+	}	
 	
 	int ObtenerValorBloque() {
 		return valor;
 	}
 	
 	void SetColor(Color c) {
-		text.setColor(c);
+		text.setColor(c);	
+	}
+	
+
+	void SetValor(int NewValor)
+	{
+		text.setString(to_string(NewValor));
 	}
 	
 };

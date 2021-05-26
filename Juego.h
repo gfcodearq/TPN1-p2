@@ -35,11 +35,9 @@ public:
 	void controlar_salto(Event *event);
 	void controlar_desplazamiento();
 	void get_numeros_aleatorios();
-	void ordenar_numeros();
-	void ordenar_bloques();
+	void ordenar_numeros();	
 	void mostrar_pantalla_numeros();
-	void procesar_colisiones();
-	bool game_over();
+	void procesar_colisiones();	
 private:
 	RenderWindow* wnd;
 	//Eventos
@@ -77,6 +75,6 @@ private:
 	Sound* sonido_game_over;
 	//Busqueda arreglo
 	int indiceAvanceBusqueda = 0;//es para ir pasando por el arreglo ordenado a medida que vas acertando
-	
+	bool game_over;	
 };
 #endif
